@@ -15,12 +15,14 @@ import { HomeModule } from './home/home.module';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { AllConfigType } from './config/config.type';
 import { SessionModule } from './session/session.module';
+import externalDatabaseConfig from './config/externalDatabase.config';
+import { LocusModule } from './locus/locus.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, authConfig, appConfig],
+      load: [databaseConfig, authConfig, appConfig, externalDatabaseConfig],
       envFilePath: ['.env'],
     }),
     TypeOrmModule.forRootAsync({
@@ -29,6 +31,12 @@ import { SessionModule } from './session/session.module';
         return new DataSource(options).initialize();
       },
     }),
+    // TypeOrmModule.forRootAsync({
+    //   name: 'externalDatabase',
+    //   useFactory: (configs: ConfigService) =>
+    //     configs.get('externalDatabase') as TypeOrmModuleOptions,
+    //   inject: [ConfigService],
+    // }),
     I18nModule.forRootAsync({
       useFactory: (configService: ConfigService<AllConfigType>) => ({
         fallbackLanguage: configService.getOrThrow('app.fallbackLanguage', {
@@ -57,6 +65,7 @@ import { SessionModule } from './session/session.module';
     ForgotModule,
     SessionModule,
     HomeModule,
+    LocusModule,
   ],
 })
 export class AppModule {}

@@ -79,7 +79,7 @@ describe('Users admin (e2e)', () => {
         firstName: `UserByAdmin${Date.now()}`,
         lastName: 'E2E',
         role: {
-          id: RoleEnum.user,
+          id: RoleEnum.normal,
         },
       })
       .expect(201);

@@ -38,33 +38,34 @@ export class UserSeedService {
     const countUser = await this.repository.count({
       where: {
         role: {
-          id: RoleEnum.normal,
+          id: RoleEnum.normal || RoleEnum.limited,
         },
       },
     });
 
-    if (!countUser && countUser < 2) {
+    if (!countUser && countUser < 3) {
       await this.repository.save(
         this.repository.create({
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'john.doe@example.com',
+          firstName: 'Normal',
+          lastName: 'Normal',
+          email: 'normal@example.com',
           password: 'secret',
           role: {
             id: RoleEnum.normal,
-            name: 'Admin',
+            name: 'Normal',
           },
         }),
       );
+
       await this.repository.save(
         this.repository.create({
-          firstName: 'John 2',
-          lastName: 'Doe 2',
-          email: 'john.doe2@example.com',
+          firstName: 'Limited',
+          lastName: 'Limited',
+          email: 'limited@example.com',
           password: 'secret',
           role: {
             id: RoleEnum.limited,
-            name: 'Admin',
+            name: 'Limited',
           },
         }),
       );
