@@ -17,6 +17,8 @@ export class GetLocusDto {
   assemblyId?: string;
 
   @ApiProperty({ example: '86113503', required: false })
+  @IsNumber()
+  @IsOptional()
   regionId?: number;
 
   @ApiProperty({ example: 'member', required: false })
